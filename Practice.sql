@@ -56,3 +56,15 @@ and a.number%num.number=0))
 
 select GETDATE();
 select datepart(DAY,GETDATE())
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+select * from Products
+select * from SALES
+
+select 
+

@@ -8,15 +8,16 @@
 --the average quantity of the product sold across all the years?
 ---------------------------------------------------------------------------------------------------
 
-(SELECT AVG(S1.Quantity) 
-		FROM SALES S1) 
+--(SELECT AVG(S1.Quantity) 
+--		FROM SALES S1) 
 
-SELECT P.PRODUCT_NAME, S.QUANTITY
+SELECT P.PRODUCT_NAME, S.YEAR,S.QUANTITY
 		FROM PRODUCTS P
 		JOIN SALES S
 		ON P.PRODUCT_ID=S.PRODUCT_ID
 		WHERE S.Quantity>(SELECT AVG(S1.Quantity) 
 		FROM SALES S1);
+
 
 -------------------------------------------------------------------------------------------
 --Q. Write a query to compare the products sales of "IPhone" and "Samsung" in each year? 
@@ -38,6 +39,16 @@ SELECT S_I.YEAR,S_I.Quantity IPHONE_QUANT,S_I.Price IPHONE_PRICE,
 	And P_S.PRODUCT_NAME='Samsung' 
 	And S_I.YEAR=S_S.YEAR
 
+SELECT si.YEAR,si.quantity iphone_quant,si.price iphone_price,
+ss.YEAR,ss.Quantity sam_quant,ss.PRICE sam_price
+from SALES si,Products pi,SALES ss,Products ps
+where si.PRODUCT_ID=pi.PRODUCT_ID
+and ss.PRODUCT_ID=ps.PRODUCT_ID
+and pi.PRODUCT_NAME='iphone'
+and ps.PRODUCT_NAME='samsung'
+and si.YEAR=ss.YEAR;
+
+
 
 --------------------------------------------------------------------------------------------------
 --Q.Write a query to find the ratios of the sales of a product?
@@ -51,17 +62,36 @@ SELECT P.PRODUCT_NAME, S.YEAR, cast(sum(S.PRICE*S.QUANTITY) over (partition by p
 		
 
 		
-
-
-SELECT * FROM
-(
-SELECT P.PRODUCT_NAME,
-       S.QUANTITY,
-       S.YEAR
-FROM   PRODUCTS P,
-       SALES S
-WHERE (P.PRODUCT_ID = S.PRODUCT_ID)
-)A
-PIVOT ( MAX(QUANTITY) FOR YEAR IN ([2010],[2011],[2012])) AS pivot_table
+select a.product_name,a.year,a.total_sale/a.sale from 
+(select p.Product_name, s.YEAR, cast((sum(s.price*s.quantity) over (partition by p.product_name,s.year) ) as float)total_sale,
+ cast((sum(quantity*price) over(partition by p.product_name))as float) sale
+ from PRODUCTS p,sales s
+ where 
+ p.PRODUCT_ID=s.PRODUCT_ID) a
+ order by a.PRODUCT_NAME,a.YEAR desc
 		
 
+---------------------------------------------------------------------------------------------------------
+ --In the SALES table quantity of each product is stored in rows for every year. 
+ --Now write a query to transpose the quantity for each product and display it in columns? 
+ --The output should look like as
+
+--PRODUCT_NAME QUAN_2010 QUAN_2011 QUAN_2012
+--------------------------------------------
+--IPhone       10        15        20
+--Samsung      20        18        20
+--Nokia        25        16        8
+---------------------------------------------------------------------------------------------------------
+
+select product_name, count(quantity) over(partition by product_name)
+
+
+
+
+
+----------------------------------------------------------------------------------------------------------
+--Write a query to find the number of products sold in each year?
+----------------------------------------------------------------------------------------------------------
+select YEAR,count(PRODUCT_ID) priduct_count
+from SALES
+group by YEAR
