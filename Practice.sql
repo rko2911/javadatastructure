@@ -66,5 +66,6 @@ select datepart(DAY,GETDATE())
 select * from Products
 select * from SALES
 
-select 
+select top 4 * 
+ from SALES
 
