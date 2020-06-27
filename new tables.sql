@@ -51,7 +51,15 @@ create table Student (
 Alter table Student
 add marks2 int;
 
-update Student set marks2= 14 where stdname='robort'
+update Student set subject= 1 where stdname='robort'
+update Student set subject= 1 where stdname='john'
+update Student set subject= 1 where stdname='raj'
+update Student set subject= 1 where stdname='jeff'
+update Student set subject= 2 where stdname='arya'
+update Student set subject= 2 where stdname='sansa'
+update Student set subject= 2 where stdname='wolf'
+update Student set subject= 2 where stdname='snow'
+
 
 insert into Student values ('john', 12); 
 insert into Student values ('raj', 15); 
