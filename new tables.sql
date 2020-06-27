@@ -48,6 +48,11 @@ create table Student (
   stdname  varchar(10) primary key,
   marks  int);
 
+Alter table Student
+add marks2 int;
+
+update Student set marks2= 14 where stdname='robort'
+
 insert into Student values ('john', 12); 
 insert into Student values ('raj', 15); 
 insert into Student values ('jeff', 20); 

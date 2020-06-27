@@ -23,7 +23,7 @@ FROM
 select a.stdname,a.marks,a.cumm,(a.cumm/a.tot) as perc from
 (select stdname,marks,sum(marks)
 over(order by marks desc) as cumm,
-cast(sum(marks) over() as numeric(10,4)) as tot 
+cast(sum(marks) over() as numeric(10,2)) as tot 
 from Student) a
 ) b
 where b.perc <0.7
@@ -35,7 +35,7 @@ FROM
 select c.stdname,c.marks2,c.cumm,(c.cumm/c.tot) as perc2 from
 (select stdname,marks2,sum(marks2)
 over(order by marks2 desc) as cumm,
-cast(sum(marks2) over() as numeric(10,4)) as tot 
+cast(sum(marks2) over() as numeric(10,2)) as tot 
 from Student) c
 ) d
 where d.perc2 <0.7
