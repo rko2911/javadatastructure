@@ -44,9 +44,18 @@ create table odetails (
   quantity int not null,
   primary key (ono, bno));
 
+create table Student (
+  stdname  varchar(10) primary key,
+  marks  int);
 
-
-
+insert into Student values ('john', 12); 
+insert into Student values ('raj', 15); 
+insert into Student values ('jeff', 20); 
+insert into Student values ('arya', 18); 
+insert into Student values ('sansa', 40); 
+insert into Student values ('snow', 30); 
+insert into Student values ('wolf', 13); 
+insert into Student values ('robort',25 );
 
 
 
